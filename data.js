@@ -56,7 +56,7 @@ async function getDayOfChanukah() {
         const cutoffDate = new Date(lastDayOfChanukah.date);
         cutoffDate.setDate(cutoffDate.getDate() + settings.CUTOFF_DAYS);
         if (now.getTime() <= cutoffDate.getTime()) {
-            console.log("It's past Chanukah but within the holidy season.");
+            console.log("It's past Chanukah but within the holiday season.");
             return 8;
         }
         else {
