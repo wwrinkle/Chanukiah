@@ -9,7 +9,7 @@ async function getDayOfChanukah() {
         }
         catch (error) {
             console.error(error);
-	    await getResponse();
+	        await getResponse();
         }
     };
     await getResponse();
