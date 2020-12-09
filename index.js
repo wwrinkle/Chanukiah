@@ -3,7 +3,7 @@ const lights = require('./lights');
 
 lights.warmupPatternStart();
 
-data.getDayOfChanukah().then(day => {
-    lights.warmupPatternStop();
-    lights.lightCandels(day);
-});
+// data.getDayOfChanukah().then(day => {
+//     lights.warmupPatternStop();
+//     lights.lightCandels(day);
+// });

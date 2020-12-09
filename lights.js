@@ -6,14 +6,18 @@ let isOn = false;
 
 rpio.init({ mapping: 'gpio' });
 
-for (candle of settings.CANDLES) {
+for (const candle of settings.CANDLES) {
+    console.log(`Setting up CANDLE no: ${candle}`);
     rpio.open(candle, rpio.OUTPUT, rpio.LOW);
 }
 
 function warmupPatternStart() {
     warmupInterval = setInterval(() => {
+        console.log('--INTERVAL--');
         for (const candle of settings.CANDLES) {
-            rpio.write(candle, candle % 2 === 0  && isOn ? rpio.HIGH : rpio.LOW);
+            const candleIsOn = candle % 2 === 0  && isOn;
+            console.log(`CANDLE no: ${candle} is ${ candleIsOn ? 'on' : 'off' }`);
+            rpio.write(candle, ccandleIsOn ? rpio.HIGH : rpio.LOW);
         }
         isOn = !isOn;
     }, settings.WARMUP_INTERVAL);
