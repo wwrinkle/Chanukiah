@@ -17,7 +17,7 @@ function warmupPatternStart() {
         for (const candle of settings.CANDLES) {
             const candleIsOn = candle % 2 === 0  && isOn;
             console.log(`CANDLE no: ${candle} is ${ candleIsOn ? 'on' : 'off' }`);
-            rpio.write(candle, ccandleIsOn ? rpio.HIGH : rpio.LOW);
+            rpio.write(candle, candleIsOn ? rpio.HIGH : rpio.LOW);
         }
         isOn = !isOn;
     }, settings.WARMUP_INTERVAL);
