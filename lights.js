@@ -16,7 +16,7 @@ function warmupPatternStart() {
             rpio.write(candle, candle % 2 === 0  && isOn ? rpio.HIGH : rpio.LOW);
         }
         isOn = !isOn;
-    }, ssettings.WARMUP_INTERVAL);
+    }, settings.WARMUP_INTERVAL);
 }
 
 function warmupPatternStop() {
