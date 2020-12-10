@@ -22,6 +22,9 @@ function warmupPatternStart() {
 
 function warmupPatternStop() {
     clearInterval(warmupInterval);
+    for (const candle of settings.CANDLES) {
+        rpio.write(candle, rpio.HIGH);
+    }
 }
 
 function lightCandels(day) {
