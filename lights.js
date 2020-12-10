@@ -25,10 +25,9 @@ function warmupPatternStop() {
 }
 
 function lightCandels(day) {
-    const candles = settings.CANDLES.slice(0, day);
-    for (const candle of candles) {
-        rpio.write(candle, rpio.HIGH);
-    }
+    settings.CANDLES.forEach((candle, index) => {
+        rpio.write(candle, day > index ? rpio.HIGH : rpio.LOW);
+    });
 }
 
 module.exports = {
