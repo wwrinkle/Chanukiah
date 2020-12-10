@@ -26,7 +26,7 @@ function warmupPatternStop() {
 
 function lightCandels(day) {
     settings.CANDLES.forEach((candle, index) => {
-        rpio.write(candle, day > index ? rpio.HIGH : rpio.LOW);
+        rpio.write(candle, day > index ? rpio.LOW : rpio.HIGH);
     });
 }
 
