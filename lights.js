@@ -2,7 +2,7 @@ const rpio = require('rpio');
 const settings = require('./settings');
 
 let warmupInterval;
-let isOn = false;
+let evensAreOn = false;
 
 rpio.init({ mapping: 'gpio' });
 
@@ -13,10 +13,10 @@ for (const candle of settings.CANDLES) {
 function warmupPatternStart() {
     warmupInterval = setInterval(() => {
         settings.CANDLES.forEach((candle, i) => {
-            const thisCandleIsOn = isOn && i % 2 === 0;
+            const thisCandleIsOn = (evensAreOn && i % 2 === 0) || (!evensAreOn && i % 2 !== 0);
             rpio.write(candle, thisCandleIsOn ? rpio.HIGH : rpio.LOW);
         });
-        isOn = !isOn;
+        evensAreOn = !evensAreOn;
     }, settings.WARMUP_INTERVAL);
 }
 
