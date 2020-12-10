@@ -2,7 +2,7 @@ const rpio = require('rpio');
 const settings = require('./settings');
 
 let warmupInterval;
-let evensAreOn = false;
+let warmupLightIndex = 0;
 
 rpio.init({ mapping: 'gpio' });
 
@@ -10,21 +10,26 @@ for (const candle of settings.CANDLES) {
     rpio.open(candle, rpio.OUTPUT, rpio.LOW);
 }
 
+function clearCandles() {
+    for (const candle of settings.CANDLES) {
+        rpio.write(candle, rpio.HIGH);
+    }
+}
+
 function warmupPatternStart() {
     warmupInterval = setInterval(() => {
-        settings.CANDLES.forEach((candle, i) => {
-            const thisCandleIsOn = (evensAreOn && i % 2 === 0) || (!evensAreOn && i % 2 !== 0);
-            rpio.write(candle, thisCandleIsOn ? rpio.HIGH : rpio.LOW);
-        });
-        evensAreOn = !evensAreOn;
+        clearCandles();
+        rpio.write(settings.CANDLES[warmupLightIndex], rpio.LOW);
+        warmupLightIndex++;
+        if (warmupLightIndex >= settings.CANDLES.length) {
+            warmupLightIndex = 0;
+        }
     }, settings.WARMUP_INTERVAL);
 }
 
 function warmupPatternStop() {
     clearInterval(warmupInterval);
-    for (const candle of settings.CANDLES) {
-        rpio.write(candle, rpio.HIGH);
-    }
+    clearCandles();
 }
 
 function lightCandels(day) {
