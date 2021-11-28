@@ -3,33 +3,27 @@ const settings = require('./settings');
 
 async function getDayOfChanukah() {
     let response;
-    const getResponse = async () => {
-        try {
-            response = await axios.get(settings.HEBCAL_URL);
-        }
-        catch (error) {
-            console.error(error);
-	        await getResponse();
-        }
-    };
-    await getResponse();
-
-    const now = new Date();
-    const [month, day, year] = now.toLocaleDateString('en-us').split('/');
+    try {
+        response = await axios.get(settings.HEBCAL_URL);
+        console.log('Received from HEBCAL:', response.data);
+    }
+    catch (error) {
+        console.error(error);
+        await getResponse();
+    }
 
     const daysOfChanukah = response.data.items.filter(i => {
         return i.category === 'holiday' &&
         i.title.includes('Chanukah: ')
     });
-    const dayOfChanukah = daysOfChanukah.find(d => {
-        const [chanukahYear, chanukahMonth, chanukahDay] = d.date.split('-');
-        return chanukahYear === year && chanukahMonth === month && chanukahDay === day;
-    });
+
+    const now = new Date('11-28-2021');
+    const dayOfChanukah = daysOfChanukah.find(d => d.date === `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`);
 
     if (dayOfChanukah) {
         const chanukahStringIndex = dayOfChanukah.title.indexOf('Chanukah: ') + 10;
         const dayOfChanukahInt = parseInt(dayOfChanukah.title[chanukahStringIndex]);
-        console.log(`It's Chanukah day: ${dayOfChanukah}`);
+        console.log(`It's Chanukah day: ${dayOfChanukahInt}`);
         return dayOfChanukahInt;
     }
     else {

@@ -4,10 +4,8 @@ const settings = require('./settings');
 
 lights.warmupPatternStart();
 
-setTimeout(() => {
+setTimeout(async () => {
+    const dayOfChanukah = await data.getDayOfChanukah();
     lights.warmupPatternStop();
-    data.getDayOfChanukah().then(day => {
-        lights.warmupPatternStop();
-        lights.lightCandels(day);
-    });
+    lights.lightCandels(dayOfChanukah);
 }, settings.WARMUP_INTERVAL * 5);
