@@ -1,21 +1,29 @@
-const rpio = require('rpio');
+const Gpio = require('onoff').Gpio;
 const settings = require('./settings');
 
 let warmupInterval;
 let warmupLightIndex = 0;
 
-rpio.init({ mapping: 'gpio' });
-
-for (const candle of settings.CANDLES) {
-    console.log(`setting candle pin ${candle} as OUTPUT`);
-    rpio.open(candle, rpio.OUTPUT, rpio.LOW);
+let candles = [];
+if (Gpio.accessible) {
+    candles = settings.CANDLES.map((pin) => {
+        console.log(`setting candle pin ${pin} as out`);
+        return new Gpio(pin, 'out');
+    });
+} else {
+    candles = settings.CANDLES.map((pin) => {
+        console.log(`mocking candle pin ${pin}`);
+        return {
+            writeSync: (value) => console.log(`mock pin ${pin} is set to ${value}`)
+        }
+    });
 }
 
 function clearCandles() {
     console.log('clearing candles');
-    settings.CANDLES.forEach((candle, index) => {
-        console.log(`Setting candle ${index} to HIGH`);
-        rpio.write(candle, rpio.HIGH);
+    candles.forEach((candle, index) => {
+        console.log(`Setting candle ${index} to 0`);
+        candle.writeSync(0);
     });
 }
 
@@ -23,8 +31,8 @@ function warmupPatternStart() {
     console.log('starting warmup pattern');
     warmupInterval = setInterval(() => {
         clearCandles();
-        console.log(`Setting candle ${warmupLightIndex} to LOW`);
-        rpio.write(settings.CANDLES[warmupLightIndex], rpio.LOW);
+        console.log(`Setting candle ${warmupLightIndex} to 1`);
+        candles[warmupLightIndex].writeSync(1);
         warmupLightIndex++;
         if (warmupLightIndex >= settings.CANDLES.length) {
             warmupLightIndex = 0;
@@ -40,9 +48,10 @@ function warmupPatternStop() {
 
 function lightCandels(day) {
     console.log('lighting candles')
-    settings.CANDLES.forEach((candle, index) => {
-        console.log(`setting candle ${index} to ${ day > index ? 'LOW' : 'HIGH' }`)
-        rpio.write(candle, day > index ? rpio.LOW : rpio.HIGH);
+    candles.forEach((candle, index) => {
+        const value = day > index ? 0 : 1;
+        console.log(`setting candle ${index} to ${value}`);
+        candle.writeSync(value);
     });
 }
 

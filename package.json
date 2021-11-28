@@ -12,6 +12,6 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.24.0",
-    "rpio": "^1.7.1"
+    "onoff": "^6.0.3"
   }
 }
