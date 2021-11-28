@@ -1,8 +1,8 @@
 const Gpio = require('onoff').Gpio;
 const settings = require('./settings');
 
-const HI = 0;
-const LOW = 1;
+const HI = 1;
+const LOW = 0;
 
 let warmupInterval;
 let warmupLightIndex = 0;
@@ -34,7 +34,7 @@ function warmupPatternStart() {
     console.log('starting warmup pattern');
     warmupInterval = setInterval(() => {
         clearCandles();
-        console.log(`Setting candle ${warmupLightIndex} to 1`);
+        console.log(`Setting candle ${warmupLightIndex} to HI`);
         candles[warmupLightIndex].writeSync(HI);
         warmupLightIndex++;
         if (warmupLightIndex >= settings.CANDLES.length) {
@@ -52,7 +52,7 @@ function warmupPatternStop() {
 function lightCandels(day) {
     console.log('lighting candles')
     candles.forEach((candle, index) => {
-        const value = day > index ? HI : LOW;
+        const value = day > index ? LOW : HI;
         console.log(`setting candle ${index} to ${value}`);
         candle.writeSync(value);
     });
