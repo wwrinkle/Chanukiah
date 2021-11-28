@@ -25,7 +25,7 @@ if (Gpio.accessible) {
 function clearCandles() {
     console.log('clearing candles');
     candles.forEach((candle, index) => {
-        console.log(`Setting candle ${index} to 0`);
+        console.log(`Setting candle ${index} to ${LOW}`);
         candle.writeSync(LOW);
     });
 }
@@ -34,7 +34,7 @@ function warmupPatternStart() {
     console.log('starting warmup pattern');
     warmupInterval = setInterval(() => {
         clearCandles();
-        console.log(`Setting candle ${warmupLightIndex} to HI`);
+        console.log(`Setting candle ${warmupLightIndex} to ${HI}`);
         candles[warmupLightIndex].writeSync(HI);
         warmupLightIndex++;
         if (warmupLightIndex >= settings.CANDLES.length) {
@@ -52,7 +52,7 @@ function warmupPatternStop() {
 function lightCandels(day) {
     console.log('lighting candles')
     candles.forEach((candle, index) => {
-        const value = day > index ? LOW : HI;
+        const value = day > index ? HI : LOW;
         console.log(`setting candle ${index} to ${value}`);
         candle.writeSync(value);
     });
