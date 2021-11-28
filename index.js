@@ -8,4 +8,4 @@ setTimeout(async () => {
     const dayOfChanukah = await data.getDayOfChanukah();
     lights.warmupPatternStop();
     lights.lightCandels(dayOfChanukah);
-}, settings.WARMUP_INTERVAL * 5);
+}, settings.WARMUP_INTERVAL * 15);
