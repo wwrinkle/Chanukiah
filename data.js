@@ -17,7 +17,7 @@ async function getDayOfChanukah() {
         i.title.includes('Chanukah: ')
     });
 
-    const now = new Date('11-28-2021');
+    const now = new Date();
     const dayOfChanukah = daysOfChanukah.find(d => d.date === `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`);
 
     if (dayOfChanukah) {
