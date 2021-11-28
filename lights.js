@@ -1,8 +1,8 @@
 const Gpio = require('onoff').Gpio;
 const settings = require('./settings');
 
-const HI = 0;
-const LOW = 1;
+const HI = 1;
+const LOW = 0;
 
 let warmupInterval;
 let warmupLightIndex = 0;
