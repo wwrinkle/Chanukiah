@@ -49,7 +49,7 @@ function warmupPatternStop() {
 function lightCandels(day) {
     console.log('lighting candles')
     candles.forEach((candle, index) => {
-        const value = day > index ? 0 : 1;
+        const value = day > index ? 1 : 0;
         console.log(`setting candle ${index} to ${value}`);
         candle.writeSync(value);
     });
