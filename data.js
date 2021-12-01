@@ -1,6 +1,15 @@
 const axios = require('axios');
 const settings = require('./settings');
 
+function padNumber(number, places=2) {
+    let output = `${number}`;
+    if (output.length < places) {
+        const numberOfZeros = places - output.length;
+        output = `${'0'.repeat(numberOfZeros)}${output}`;
+    }
+    return output;
+}
+
 async function getDayOfChanukah() {
     let response;
     try {
@@ -18,7 +27,7 @@ async function getDayOfChanukah() {
     });
 
     const now = new Date();
-    const dayOfChanukah = daysOfChanukah.find(d => d.date === `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`);
+    const dayOfChanukah = daysOfChanukah.find(d => d.date === `${now.getFullYear()}-${padNumber(now.getMonth() + 1)}-${padNumber(now.getDate())}`);
 
     if (dayOfChanukah) {
         const chanukahStringIndex = dayOfChanukah.title.indexOf('Chanukah: ') + 10;
