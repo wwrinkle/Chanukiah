@@ -38,14 +38,13 @@ async function getDayOfChanukah() {
     else {
         const lastDayOfChanukah = daysOfChanukah.find(d => d.title.includes('8 Candles'));
         const lastDayOfChanukahDate = new Date(lastDayOfChanukah.date);
-        const cutoffDate = new Date(lastDayOfChanukah.date);
-        cutoffDate.setDate(cutoffDate.getDate() + settings.CUTOFF_DAYS);
+        const cutoffDate = new Date(`1/7/${lastDayOfChanukah.getFullYear() + 1}`);
         if (now.getTime() > lastDayOfChanukahDate.getTime() && now.getTime() <= cutoffDate.getTime()) {
-            console.log("It's past Chanukah but within the holiday season.");
+            console.log(`It's past Chanukah but within the holiday season.`);
             return 8;
         }
         else {
-            console.log("It's not Chanukah");
+            console.log(`It's not Chanukah`);
             return 0;
         }
     }
