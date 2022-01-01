@@ -4,8 +4,11 @@ const CANDLES = [27, 22, 10, 9, 2, 3, 4, 17];
 
 const WARMUP_INTERVAL = 1000;
 
+const CUTOFF_DATE = '1/7';
+
 module.exports = {
     HEBCAL_URL,
     CANDLES,
-    WARMUP_INTERVAL
+    WARMUP_INTERVAL,
+    CUTOFF_DATE
 };
